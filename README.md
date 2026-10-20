@@ -4,4 +4,4 @@ The Dialog tag template for the [Google Tag Manager Community Template Gallery](
 
 Setup guide: https://docs.askdialog.com/installation/google-tag-manager
 
-This repository publishes the template to the gallery. Its source lives in Dialog's main repository (`frontend/dialog-tag/gtm/dialog.tpl`); `template.tpl` here is a copy of it, and each published version is a commit listed in `metadata.yaml`.
+This repository is the template's only source: `template.tpl` is the template itself, and each published version is a commit listed in `metadata.yaml`.

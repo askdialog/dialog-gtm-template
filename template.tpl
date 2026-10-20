@@ -53,25 +53,6 @@ ___TEMPLATE_PARAMETERS___
   },
   {
     "type": "SELECT",
-    "name": "disableAddToCart",
-    "displayName": "Disable add-to-cart",
-    "macrosInSelect": true,
-    "selectItems": [
-      {
-        "value": "false",
-        "displayValue": "No"
-      },
-      {
-        "value": "true",
-        "displayValue": "Yes"
-      }
-    ],
-    "simpleValueType": true,
-    "defaultValue": "false",
-    "help": "Yes hides the assistant's add-to-cart buttons. Accepts a variable returning true or false."
-  },
-  {
-    "type": "SELECT",
     "name": "hideDialog",
     "displayName": "Hide Dialog",
     "macrosInSelect": true,
@@ -88,25 +69,6 @@ ___TEMPLATE_PARAMETERS___
     "simpleValueType": true,
     "defaultValue": "false",
     "help": "Yes shows neither the assistant nor the product block; measurement continues. For A/B tests, use a variable returning true or false."
-  },
-  {
-    "type": "SELECT",
-    "name": "staging",
-    "displayName": "Staging",
-    "macrosInSelect": true,
-    "selectItems": [
-      {
-        "value": "false",
-        "displayValue": "No"
-      },
-      {
-        "value": "true",
-        "displayValue": "Yes"
-      }
-    ],
-    "simpleValueType": true,
-    "defaultValue": "false",
-    "help": "Yes loads Dialog's staging script, which talks to Dialog's staging API. For Dialog's tests only."
   }
 ]
 
@@ -122,8 +84,7 @@ const injectScript = require('injectScript');
 const isConsentGranted = require('isConsentGranted');
 const templateStorage = require('templateStorage');
 
-const PRODUCTION_SCRIPT_URL = 'https://cdn.askdialog.com/assets/dialog.js';
-const STAGING_SCRIPT_URL = 'https://d3f72zs8c5zdry.cloudfront.net/assets/dialog.js';
+const SCRIPT_URL = 'https://cdn.askdialog.com/assets/dialog.js';
 const PRODUCER = 'gtm';
 const CONSENT_SET_UP_KEY = 'consentSetUp';
 const ANALYTICS_STORAGE = 'analytics_storage';
@@ -182,7 +143,6 @@ const track = (event) => {
 dialog(CONFIG_COMMAND, {
   apiKey: data.apiKey,
   productId: data.productId,
-  disableAddToCart: isYes(data.disableAddToCart),
   hideDialog: isYes(data.hideDialog),
   producer: PRODUCER,
 });
@@ -191,8 +151,7 @@ const event = copyFromDataLayer('event');
 if (COMMERCE_EVENTS.indexOf(event) !== -1) {
   track(event);
 }
-const scriptUrl = isYes(data.staging) ? STAGING_SCRIPT_URL : PRODUCTION_SCRIPT_URL;
-injectScript(scriptUrl, data.gtmOnSuccess, data.gtmOnFailure, scriptUrl);
+injectScript(SCRIPT_URL, data.gtmOnSuccess, data.gtmOnFailure, SCRIPT_URL);
 
 
 ___WEB_PERMISSIONS___
@@ -213,10 +172,6 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://cdn.askdialog.com/assets/dialog.js"
-              },
-              {
-                "type": 1,
-                "string": "https://d3f72zs8c5zdry.cloudfront.net/assets/dialog.js"
               }
             ]
           }
@@ -438,7 +393,7 @@ scenarios: []
 
 ___NOTES___
 
-Dialog's GTM template (frontend/dialog-tag in dialog-ecom). It loads dialog.js,
+Dialog's GTM template (github.com/askdialog/dialog-gtm-template). It loads dialog.js,
 which runs the assistant, the product block and the measurement.
 Triggers to set on the tag:
 - Initialization - All Pages
