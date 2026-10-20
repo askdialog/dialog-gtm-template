@@ -1,0 +1,5 @@
+homepage: "https://www.askdialog.com"
+documentation: "https://docs.askdialog.com/installation/google-tag-manager"
+versions:
+  - sha: 2527023c97201ac01a4d07e30ed67d1460cd6eec
+    changeNotes: Initial release.
