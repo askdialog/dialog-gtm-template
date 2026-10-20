@@ -1,5 +1,7 @@
 homepage: "https://www.askdialog.com"
 documentation: "https://docs.askdialog.com/installation/google-tag-manager"
 versions:
+  - sha: 3ef7fbbe320c35f6b25a269c5f168fde6f9974f8
+    changeNotes: Removes the Staging and Disable add-to-cart fields; the tag always loads Dialog's production script.
   - sha: 2527023c97201ac01a4d07e30ed67d1460cd6eec
     changeNotes: Initial release.
